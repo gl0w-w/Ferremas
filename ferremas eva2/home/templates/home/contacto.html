@@ -1,0 +1,226 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contacto - FERREMAS</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+  body {
+    background: url('https://images.unsplash.com/photo-1570129477492-45c003edd2be?crop=entropy&cs=tinysrgb&fit=crop&h=700&w=1600') center center/cover no-repeat;
+    font-family: 'Segoe UI', sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  main {
+    flex: 1;
+    padding: 60px 0;
+  }
+
+  .info-box {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+
+  footer {
+    background-color: #2E7D32;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+  }
+
+  .title {
+    color: #2E7D32;
+    font-weight: bold;
+  }
+
+  .form-control, .form-select {
+    border-radius: 10px;
+  }
+
+  .btn-ferremas {
+    background-color: #2E7D32;
+    color: white;
+    font-weight: bold;
+    border: none;
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    border-radius: 10px;
+  }
+
+  .btn-ferremas:hover {
+    background-color: #2E7D32;
+  }
+</style>
+
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #363b49;">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <img src="{% static 'img/logo.png' %}" alt="logo" style="height: 70px; border-radius: 15px 0 15px 0;">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="menu">
+      <ul class="navbar-nav ms-auto align-items-center">
+        <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" href="/productos/">Productos</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'vista_ofertas' %}">Ofertas</a></li>
+        <li class="nav-item"><a class="nav-link active" href="{% url 'contacto' %}">Contacto</a></li>
+
+        {% if user.is_authenticated %}
+          <li class="nav-item ms-3">
+            <span class="text-white me-3">Hola, {{ user.username }}</span>
+          </li>
+          <li class="nav-item ms-2">
+            <a class="btn btn-outline-light px-3 py-2" href="/usuarios/cerrar-sesion/">
+              <i class="fas fa-sign-out-alt me-2"></i> Cerrar Sesión
+            </a>
+          </li>
+        {% else %}
+          <li class="nav-item ms-3">
+            <a class="btn btn-outline-light d-flex align-items-center px-3 py-2" href="/usuarios/iniciosesion/">
+              <i class="fas fa-user me-2"></i> Iniciar Sesión
+            </a>
+          </li>
+        {% endif %}
+
+        {% if user.is_staff %}
+          <li class="nav-item ms-2">
+            <a class="nav-link" href="{% url 'panel_administracion' %}">Panel de Administración</a>
+          </li>
+        {% endif %}
+
+        {% if user.is_authenticated %}
+          <li class="nav-item ms-2">
+            <a class="nav-link" href="{% url 'vista_carrito' %}"><i class="fas fa-shopping-cart"></i> Carrito</a>
+          </li>
+          <li class="nav-item ms-2">
+            <a class="nav-link" href="{% url 'mi_historial_compras' %}"><i class="fas fa-history"></i> Mis Compras</a>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Contenido -->
+<main class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="info-box">
+        <h2 class="text-center mb-4 title">Contáctanos</h2>
+
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %} text-center">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+
+        {% if user.is_authenticated %}
+          <form method="post" action="{% url 'contacto' %}">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="asunto" class="form-label">Asunto</label>
+              <input type="text" name="asunto" id="asunto" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label for="mensaje" class="form-label">Mensaje</label>
+              <textarea name="mensaje" id="mensaje" rows="5" class="form-control" required></textarea>
+            </div>
+            <button type="submit" class="btn-ferremas">Enviar Mensaje</button>
+          </form>
+
+          <!-- Lista de mensajes del usuario -->
+          {% if mensajes_usuario %}
+            <div class="mt-5">
+              <h4 class="mb-4">Mis Mensajes Enviados</h4>
+              <div class="row">
+                {% for mensaje in mensajes_usuario %}
+                  <div class="col-12 mb-3">
+                    <div class="card {% if mensaje.leido %}border-success{% else %}border-warning{% endif %}">
+                      <div class="card-header d-flex justify-content-between align-items-center">
+                        <h6 class="mb-0">
+                          <strong>{{ mensaje.asunto }}</strong>
+                        </h6>
+                        <div class="d-flex align-items-center">
+                          {% if mensaje.leido %}
+                            <span class="badge bg-success me-2">
+                              <i class="fas fa-check"></i> Leído
+                            </span>
+                          {% else %}
+                            <span class="badge bg-warning text-dark me-2">
+                              <i class="fas fa-clock"></i> Pendiente
+                            </span>
+                          {% endif %}
+                          <small class="text-muted">{{ mensaje.fecha_creacion|date:"d/m/Y H:i" }}</small>
+                        </div>
+                      </div>
+                      <div class="card-body">
+                        <p class="mb-0">{{ mensaje.mensaje|truncatewords:20 }}</p>
+                        {% if mensaje.mensaje|length > 100 %}
+                          <button class="btn btn-link btn-sm p-0 mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#mensaje-{{ mensaje.id }}" aria-expanded="false">
+                            Ver mensaje completo
+                          </button>
+                          <div class="collapse mt-2" id="mensaje-{{ mensaje.id }}">
+                            <div class="card card-body bg-light">
+                              {{ mensaje.mensaje|linebreaks }}
+                            </div>
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+
+              {% if mensajes_usuario|length == 5 %}
+                <div class="text-center mt-3">
+                  <p class="text-muted"><small>Mostrando los 5 mensajes más recientes</small></p>
+                </div>
+              {% endif %}
+            </div>
+          {% else %}
+            <div class="alert alert-info mt-4 text-center">
+              <i class="fas fa-info-circle"></i>
+              <p class="mb-0">Aún no has enviado ningún mensaje de contacto.</p>
+            </div>
+          {% endif %}
+
+        {% else %}
+          <div class="alert alert-warning text-center">
+            <p class="mb-3">Debes iniciar sesión para enviar un mensaje de contacto.</p>
+            <a href="/usuarios/iniciosesion/" class="btn btn-ferremas">Iniciar Sesión</a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</main>
+
+
+
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <p class="mb-0">© 2025 FERREMAS - Todos los derechos reservados</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

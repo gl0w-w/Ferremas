@@ -1,0 +1,425 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mensajes de Contacto - FERREMAS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: url('https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yle55W6QKWSoQbE4/herramientas-manuales-basicas-02-2022-07-AE0vvPgGKDiqlZEX.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-section {
+            background: linear-gradient(135deg, #2E7D32, #4CAF50);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .stats-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            border: 1px solid #dee2e6;
+        }
+
+        .stats-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2E7D32;
+        }
+
+        .table-container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-ferremas {
+            background-color: #2E7D32;
+            border-color: #2E7D32;
+            color: white;
+        }
+
+        .btn-ferremas:hover {
+            background-color: #1B5E20;
+            border-color: #1B5E20;
+            color: white;
+        }
+
+        .mensaje-no-leido {
+            background-color: rgba(255, 193, 7, 0.1);
+            border-left: 4px solid #FFC107;
+        }
+
+        .mensaje-leido {
+            background-color: rgba(40, 167, 69, 0.05);
+            border-left: 4px solid #28A745;
+        }
+
+        .filters-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .modal-mensaje {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .loading-spinner {
+            display: none;
+        }
+
+        .btn-action {
+            transition: all 0.3s ease;
+        }
+
+        .btn-action:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header-section">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1><i class="fas fa-envelope me-3"></i>Mensajes de Contacto</h1>
+                    <p class="mb-0">Gestiona todos los mensajes enviados por los usuarios</p>
+                </div>
+                <div class="col-md-4 text-end">
+                    <a href="{% url 'panel_administracion' %}" class="btn btn-light">
+                        <i class="fas fa-arrow-left me-2"></i>Volver al Panel
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Estadísticas -->
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="stats-card">
+                    <div class="stats-number">{{ total_mensajes }}</div>
+                    <div class="text-muted">Total de Mensajes</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stats-card">
+                    <div class="stats-number text-warning">{{ mensajes_no_leidos }}</div>
+                    <div class="text-muted">No Leídos</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stats-card">
+                    <div class="stats-number text-success">{{ mensajes_leidos }}</div>
+                    <div class="text-muted">Leídos</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filtros -->
+        <div class="filters-section">
+            <form method="GET" class="row g-3">
+                <div class="col-md-4">
+                    <label for="estado" class="form-label">Filtrar por estado:</label>
+                    <select name="estado" id="estado" class="form-select">
+                        <option value="todos" {% if filtro_estado == 'todos' %}selected{% endif %}>Todos</option>
+                        <option value="no_leidos" {% if filtro_estado == 'no_leidos' %}selected{% endif %}>No leídos</option>
+                        <option value="leidos" {% if filtro_estado == 'leidos' %}selected{% endif %}>Leídos</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="busqueda" class="form-label">Buscar por asunto o usuario:</label>
+                    <input type="text" name="busqueda" id="busqueda" class="form-control" value="{{ busqueda }}" placeholder="Escribir para buscar...">
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">&nbsp;</label>
+                    <button type="submit" class="btn btn-ferremas w-100">
+                        <i class="fas fa-search"></i> Filtrar
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Mostrar mensajes -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %} alert-dismissible fade show">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <!-- Tabla de mensajes -->
+        <div class="table-container">
+            {% if page_obj %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Usuario</th>
+                                <th>Asunto</th>
+                                <th>Fecha</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for mensaje in page_obj %}
+                                <tr class="{% if not mensaje.leido %}mensaje-no-leido{% else %}mensaje-leido{% endif %}">
+                                    <td>
+                                        <div>
+                                            <strong>{{ mensaje.usuario.get_full_name }}</strong>
+                                            <br>
+                                            <small class="text-muted">{{ mensaje.usuario.email }}</small>
+                                        </div>
+                                    </td>
+                                    <td>{{ mensaje.asunto|truncatechars:50 }}</td>
+                                    <td>{{ mensaje.fecha_creacion|date:"d/m/Y H:i" }}</td>
+                                    <td>
+                                        {% if mensaje.leido %}
+                                            <span class="badge bg-success">Leído</span>
+                                        {% else %}
+                                            <span class="badge bg-warning">No leído</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-info me-1 btn-action"
+                                            onclick="verMensaje('{{ mensaje.id }}', '{{ mensaje.asunto|escapejs }}', '{{ mensaje.mensaje|escapejs }}', '{{ mensaje.usuario.get_full_name|escapejs }}', '{{ mensaje.fecha_creacion|date:'d/m/Y H:i' }}', {{ mensaje.leido|yesno:'true,false' }})"
+                                            title="Ver mensaje completo">
+                                        <i class="fas fa-eye"></i>
+                                        </button>
+                                        <form method="POST" action="{% url 'marcar_leido' mensaje.id %}" class="d-inline">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-sm {% if mensaje.leido %}btn-outline-secondary{% else %}btn-success{% endif %} btn-action" title="{% if mensaje.leido %}Marcar como no leído{% else %}Marcar como leído{% endif %}">
+                                                <i class="fas {% if mensaje.leido %}fa-eye-slash{% else %}fa-check{% endif %}"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Paginación -->
+                {% if page_obj.has_other_pages %}
+                    <nav aria-label="Paginación de mensajes">
+                        <ul class="pagination justify-content-center mt-4">
+                            {% if page_obj.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=1{% if filtro_estado != 'todos' %}&estado={{ filtro_estado }}{% endif %}{% if busqueda %}&busqueda={{ busqueda }}{% endif %}">Primera</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if filtro_estado != 'todos' %}&estado={{ filtro_estado }}{% endif %}{% if busqueda %}&busqueda={{ busqueda }}{% endif %}">Anterior</a>
+                                </li>
+                            {% endif %}
+                            
+                            <li class="page-item active">
+                                <span class="page-link">{{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+                            </li>
+                            
+                            {% if page_obj.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if filtro_estado != 'todos' %}&estado={{ filtro_estado }}{% endif %}{% if busqueda %}&busqueda={{ busqueda }}{% endif %}">Siguiente</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if filtro_estado != 'todos' %}&estado={{ filtro_estado }}{% endif %}{% if busqueda %}&busqueda={{ busqueda }}{% endif %}">Última</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                {% endif %}
+            {% else %}
+                <div class="text-center py-5">
+                    <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                    <h4 class="text-muted">No hay mensajes</h4>
+                    <p class="text-muted">No se encontraron mensajes con los filtros aplicados.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Modal para ver mensaje completo -->
+    <div class="modal fade" id="mensajeModal" tabindex="-1" aria-labelledby="mensajeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="mensajeModalLabel">
+                        <i class="fas fa-envelope me-2"></i>Mensaje de Contacto
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <strong><i class="fas fa-user me-2 text-primary"></i>De:</strong>
+                            <span id="modalUsuario"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <strong><i class="fas fa-calendar me-2 text-success"></i>Fecha:</strong>
+                            <span id="modalFecha"></span>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-8">
+                            <strong><i class="fas fa-tag me-2 text-warning"></i>Asunto:</strong>
+                            <span id="modalAsunto"></span>
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <span id="modalEstado"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <strong><i class="fas fa-comment me-2 text-info"></i>Mensaje:</strong>
+                        <div class="border p-3 bg-light rounded mt-2 modal-mensaje" id="modalMensaje" style="white-space: pre-wrap;"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-2"></i>Cerrar
+                    </button>
+                        <button type="button" class="btn btn-ferremas" id="marcarLeidoModal" onclick="marcarLeidoDesdeModal()">
+                        <i class="fas fa-check me-2"></i>Marcar como Leído
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div class="loading-spinner position-fixed top-50 start-50 translate-middle" id="loadingSpinner">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Cargando...</span>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        const marcarLeidoUrlBase = "{% url 'marcar_leido' 0 %}".replace('/0/', '/');
+
+        // Variable global para almacenar el ID del mensaje actual
+        let mensajeActualId = null;
+
+        // Función para mostrar el modal con los datos del mensaje
+        function verMensaje(id, asunto, mensaje, usuario, fecha, leido) {
+            mensajeActualId = id;
+            
+            // Llenar los campos del modal
+            document.getElementById('modalUsuario').textContent = usuario;
+            document.getElementById('modalFecha').textContent = fecha;
+            document.getElementById('modalAsunto').textContent = asunto;
+            document.getElementById('modalMensaje').textContent = mensaje;
+            
+            // Actualizar el estado y botón
+            const estadoElement = document.getElementById('modalEstado');
+            const botonMarcar = document.getElementById('marcarLeidoModal');
+            
+            if (leido) {
+                estadoElement.innerHTML = '<span class="badge bg-success"><i class="fas fa-check me-1"></i>Leído</span>';
+                botonMarcar.innerHTML = '<i class="fas fa-eye-slash me-2"></i>Marcar como No Leído';
+                botonMarcar.className = 'btn btn-outline-secondary';
+            } else {
+                estadoElement.innerHTML = '<span class="badge bg-warning"><i class="fas fa-clock me-1"></i>No Leído</span>';
+                botonMarcar.innerHTML = '<i class="fas fa-check me-2"></i>Marcar como Leído';
+                botonMarcar.className = 'btn btn-ferremas';
+            }
+            
+            // Mostrar el modal
+            const modal = new bootstrap.Modal(document.getElementById('mensajeModal'));
+            modal.show();
+        }
+
+        // Función para marcar como leído desde el modal
+function marcarLeidoDesdeModal() {
+    if (mensajeActualId) {
+        mostrarSpinner();
+        
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = marcarLeidoUrlBase + mensajeActualId + '/';
+        
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        const csrfInput = document.createElement('input');
+        csrfInput.type = 'hidden';
+        csrfInput.name = 'csrfmiddlewaretoken';
+        csrfInput.value = csrfToken;
+        form.appendChild(csrfInput);
+        
+        document.body.appendChild(form);
+        form.submit();
+    }
+}
+
+        // Función para mostrar spinner de carga
+        function mostrarSpinner() {
+            document.getElementById('loadingSpinner').style.display = 'block';
+        }
+
+        // Función para ocultar spinner de carga
+        function ocultarSpinner() {
+            document.getElementById('loadingSpinner').style.display = 'none';
+        }
+
+        // Búsqueda en tiempo real (opcional)
+        document.addEventListener('DOMContentLoaded', function() {
+            const busquedaInput = document.getElementById('busqueda');
+            let timeoutId;
+            
+            busquedaInput.addEventListener('input', function() {
+                clearTimeout(timeoutId);
+                timeoutId = setTimeout(function() {
+                    // Opcional: implementar búsqueda AJAX en tiempo real
+                }, 500);
+            });
+            
+            // Ocultar spinner al cargar la página
+            ocultarSpinner();
+        });
+
+        // Confirmar acciones importantes
+        document.querySelectorAll('form[action*="marcar-leido"]').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                mostrarSpinner();
+            });
+        });
+
+        // Auto-ocultar alertas después de 5 segundos
+        document.addEventListener('DOMContentLoaded', function() {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => {
+                setTimeout(() => {
+                    const bsAlert = new bootstrap.Alert(alert);
+                    bsAlert.close();
+                }, 5000);
+            });
+        });
+    </script>
+</body>
+</html>

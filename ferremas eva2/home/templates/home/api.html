@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Rutas API - Ferremás</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    h1 { margin-bottom: 20px; }
+    .button-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .api-button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .api-button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h1>Rutas API - Ferremás</h1>
+
+  <div class="button-container">
+    <a href="{% url 'api_lista_productos' %}" class="api-button">Lista productos</a>
+    <a href="{% url 'api_agregar_producto' %}" class="api-button">Agregar producto</a>
+    <a href="{% url 'api_editar_producto' 1 %}" class="api-button">Editar producto (ID:1)</a>
+    <a href="{% url 'api_ofertas' %}" class="api-button">Ofertas productos</a>
+    <a href="{% url 'api_toggle_activo_producto' 1 %}" class="api-button">Toggle activo producto (ID:1)</a>
+    <a href="{% url 'api_lista_productos_admin' %}" class="api-button">Lista productos admin</a>
+    <a href="{% url 'api_eliminar_producto' 1 %}" class="api-button">Eliminar producto (ID:1)</a>
+    <a href="{% url 'api_detalle_producto' 1 %}" class="api-button">Detalle producto (ID:1)</a>
+
+    <a href="{% url 'api_registro' %}" class="api-button">Registro usuario</a>
+    <a href="{% url 'api_login' %}" class="api-button">Login</a>
+    <a href="{% url 'api_lista_usuarios' %}" class="api-button">Lista usuarios</a>
+    <a href="{% url 'api_agregar_usuario' %}" class="api-button">Agregar usuario</a>
+    <a href="{% url 'api_toggle_activo_usuario' 1 %}" class="api-button">Toggle activo usuario (ID:1)</a>
+    <a href="{% url 'api_editar_usuario' 1 %}" class="api-button">Editar usuario (ID:1)</a>
+
+    <a href="{% url 'gestionar_carrito' %}" class="api-button">Gestionar carrito</a>
+    <a href="{% url 'agregar_producto_carrito' %}" class="api-button">Agregar producto a carrito</a>
+    <a href="{% url 'actualizar_cantidad_producto' 1 %}" class="api-button">Actualizar cantidad (ID:1)</a>
+    <a href="{% url 'disminuir_cantidad_producto' 1 %}" class="api-button">Disminuir cantidad (ID:1)</a>
+
+    <a href="{% url 'iniciar_pago_webpay' %}" class="api-button">Iniciar pago WebPay</a>
+    <a href="{% url 'respuesta_pago_webpay' %}" class="api-button">Respuesta WebPay</a>
+
+    <a href="{% url 'api_historial_ventas' %}" class="api-button">Historial ventas</a>
+    <a href="{% url 'api_mis_compras' %}" class="api-button">Mis compras</a>
+
+    <a href="{% url 'api_retiros' %}" class="api-button">Retiros</a>
+    <a href="{% url 'api_confirmar_retiro' 1 %}" class="api-button">Confirmar retiro (ID:1)</a>
+
+    <a href="{% url 'api_despachos' %}" class="api-button">Despachos</a>
+    <a href="{% url 'api_confirmar_despacho' 1 %}" class="api-button">Confirmar despacho (ID:1)</a>
+
+    <a href="{% url 'api_boleta' 1 %}" class="api-button">Ver boleta (ID:1)</a>
+  </div>
+</body>
+</html>

@@ -1,0 +1,227 @@
+{
+	"info": {
+		"_postman_id": "8feba02f-21ad-4008-84a2-626e8e37a420",
+		"name": "ferremas ev2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44725404",
+		"_collection_link": "https://basc-2620014.postman.co/workspace/B-Asc's-Workspace~b7a4604a-d1d0-4c28-8805-2eae23942aba/collection/44725404-8feba02f-21ad-4008-84a2-626e8e37a420?action=share&source=collection_link&creator=44725404"
+	},
+	"item": [
+		{
+			"name": "obtener usuarios",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Token de2ede0e2f733fc80ea704ba16e6af34f65cd79c",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/usuarios/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"usuarios",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "agregar porductos",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Token de2ede0e2f733fc80ea704ba16e6af34f65cd79c",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  {\"nombre\": \"Martillo de carpintero\", \"descripcion\": \"Martillo de acero con mango antideslizante\", \"precio\": 8500, \"stock\": 50, \"activo\": true},\r\n  {\"nombre\": \"Destornillador plano\", \"descripcion\": \"Destornillador con punta plana y mango ergonómico\", \"precio\": 3500, \"stock\": 70, \"activo\": true},\r\n  {\"nombre\": \"Llave inglesa\", \"descripcion\": \"Llave ajustable de 10 pulgadas\", \"precio\": 12000, \"stock\": 40, \"activo\": true},\r\n  {\"nombre\": \"Cinta métrica\", \"descripcion\": \"Cinta métrica de 5 metros\", \"precio\": 7000, \"stock\": 100, \"activo\": true},\r\n  {\"nombre\": \"Nivel de burbuja\", \"descripcion\": \"Nivel de burbuja de aluminio\", \"precio\": 9000, \"stock\": 35, \"activo\": true},\r\n  {\"nombre\": \"Sierra eléctrica\", \"descripcion\": \"Sierra eléctrica con hoja de 7 pulgadas\", \"precio\": 85000, \"stock\": 12, \"activo\": true},\r\n  {\"nombre\": \"Alicate universal\", \"descripcion\": \"Alicate para múltiples usos\", \"precio\": 8000, \"stock\": 60, \"activo\": true},\r\n  {\"nombre\": \"Cúter profesional\", \"descripcion\": \"Cúter con hoja retráctil y empuñadura segura\", \"precio\": 4500, \"stock\": 85, \"activo\": true},\r\n  {\"nombre\": \"Taladro inalámbrico\", \"descripcion\": \"Taladro sin cable con batería de larga duración\", \"precio\": 75000, \"stock\": 18, \"activo\": true},\r\n  {\"nombre\": \"Lijadora orbital\", \"descripcion\": \"Lijadora eléctrica para acabados finos\", \"precio\": 60000, \"stock\": 20, \"activo\": true},\r\n  {\"nombre\": \"Cepillo de carpintero\", \"descripcion\": \"Cepillo manual para madera\", \"precio\": 9500, \"stock\": 40, \"activo\": true},\r\n  {\"nombre\": \"Brocha para pintura\", \"descripcion\": \"Brocha de 3 pulgadas para pintura\", \"precio\": 2500, \"stock\": 150, \"activo\": true},\r\n  {\"nombre\": \"Esmeril angular\", \"descripcion\": \"Herramienta para corte y pulido\", \"precio\": 65000, \"stock\": 15, \"activo\": true},\r\n  {\"nombre\": \"Guantes de trabajo\", \"descripcion\": \"Guantes resistentes para construcción\", \"precio\": 7000, \"stock\": 100, \"activo\": true},\r\n  {\"nombre\": \"Linterna LED\", \"descripcion\": \"Linterna portátil con luz potente\", \"precio\": 15000, \"stock\": 45, \"activo\": true},\r\n  {\"nombre\": \"Cinta aislante\", \"descripcion\": \"Cinta para aislamiento eléctrico\", \"precio\": 2000, \"stock\": 200, \"activo\": true},\r\n  {\"nombre\": \"Regla metálica\", \"descripcion\": \"Regla de acero inoxidable de 30 cm\", \"precio\": 3000, \"stock\": 80, \"activo\": true},\r\n  {\"nombre\": \"Pistola de silicona\", \"descripcion\": \"Pistola para aplicar silicona con precisión\", \"precio\": 18000, \"stock\": 30, \"activo\": true},\r\n  {\"nombre\": \"Tijeras para metal\", \"descripcion\": \"Tijeras robustas para cortar metal fino\", \"precio\": 12000, \"stock\": 25, \"activo\": true},\r\n  {\"nombre\": \"Mascarilla de protección\", \"descripcion\": \"Mascarilla reutilizable para polvo y partículas\", \"precio\": 5000, \"stock\": 90, \"activo\": true}\r\n]\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/productos/api/agregar/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"productos",
+						"api",
+						"agregar",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "obtener productos",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nombre\": \"Martillo Básico\",\r\n  \"categoria\": \"Herramientas\",\r\n  \"precio\": 4500,\r\n  \"stock\": 20,\r\n  \"descripcion\": \"Martillo ideal para trabajos generales.\",\r\n  \"imagen\": \"https://img.freepik.com/vector-premium/ilustracion-icono-prueba_430232-32.jpg?w=740\",\r\n  \"activo\": true\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/productos/api/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"productos",
+						"api",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "obtener producto unico",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8000/productos/api/8/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"productos",
+						"api",
+						"8",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "eliminar producto",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Token de2ede0e2f733fc80ea704ba16e6af34f65cd79c",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/productos/api/eliminar/3/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"productos",
+						"api",
+						"eliminar",
+						"3",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "obtener productos ofertas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/productos/api/ofertas/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"productos",
+						"api",
+						"ofertas",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
