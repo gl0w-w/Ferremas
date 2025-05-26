@@ -1,0 +1,41 @@
+.hero {
+            background: url('https://images.unsplash.com/photo-1570129477492-45c003edd2be?crop=entropy&cs=tinysrgb&fit=crop&h=700&w=1600') center center/cover no-repeat;
+            height: 90vh;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-shadow: 2px 2px 5px black;
+        }
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+        }
+        .hero p {
+            font-size: 1.5rem;
+        }
+        .section-title {
+            margin: 50px 0 30px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .btn-ferremas {
+            background-color: #FFB300;
+            color: white;
+            font-weight: bold;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            border-radius: 10px;
+        }
+        .btn-ferremas:hover {
+            background-color: #FFA000;
+        }
+        footer {
+            background-color: #2E7D32;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 50px;
+        }

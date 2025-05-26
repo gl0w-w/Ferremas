@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>FERREMAS - Resultado del Pago</title>
+  <title>Resultado del Pago | FERREMAS </title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
@@ -16,7 +16,7 @@
       margin: 0;
       padding: 20px;
     }
-    
+
     .card {
       background-color: #ffffff;
       padding: 3rem 2.5rem;
@@ -29,7 +29,7 @@
       position: relative;
       overflow: hidden;
     }
-    
+
     .card::before {
       content: '';
       position: absolute;
@@ -40,41 +40,41 @@
       background: linear-gradient(90deg, #ffa500, #ff8c00, #ffa500);
       animation: shimmer 2s infinite;
     }
-    
+
     @keyframes shimmer {
       0% { transform: translateX(-100%); }
       100% { transform: translateX(100%); }
     }
-    
+
     .card h2 {
       color: #2c3e50;
       margin-bottom: 1.5rem;
       font-weight: 700;
       font-size: 1.8rem;
     }
-    
+
     .icon {
       font-size: 5rem;
       margin-bottom: 1.5rem;
       animation: bounce 1s ease-in-out;
     }
-    
+
     @keyframes bounce {
       0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
       40% { transform: translateY(-10px); }
       60% { transform: translateY(-5px); }
     }
-    
+
     .success {
       color: #28a745;
       text-shadow: 0 2px 4px rgba(40, 167, 69, 0.3);
     }
-    
+
     .fail {
       color: #dc3545;
       text-shadow: 0 2px 4px rgba(220, 53, 69, 0.3);
     }
-    
+
     .info-section {
       background: #f8f9fa;
       padding: 1.5rem;
@@ -82,16 +82,16 @@
       margin: 1.5rem 0;
       border-left: 4px solid #ffa500;
     }
-    
+
     .info-item {
       margin-bottom: 0.8rem;
       font-size: 1.1rem;
     }
-    
+
     .info-item:last-child {
       margin-bottom: 0;
     }
-    
+
     .btn-ferremas {
       background: linear-gradient(135deg, #ffa500, #ff8c00);
       border: none;
@@ -105,14 +105,14 @@
       text-decoration: none;
       display: inline-block;
     }
-    
+
     .btn-ferremas:hover {
       background: linear-gradient(135deg, #e69500, #e67e00);
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(255, 165, 0, 0.4);
       color: #000;
     }
-    
+
     .btn-secondary {
       background: linear-gradient(135deg, #6c757d, #5a6268);
       border: none;
@@ -127,20 +127,20 @@
       display: inline-block;
       margin-left: 10px;
     }
-    
+
     .btn-secondary:hover {
       background: linear-gradient(135deg, #5a6268, #495057);
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(108, 117, 125, 0.4);
       color: white;
     }
-    
+
     .logo {
       width: 140px;
       margin-bottom: 1.5rem;
       filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
     }
-    
+
     .error-details {
       background: #f8d7da;
       color: #721c24;
@@ -150,7 +150,7 @@
       border: 1px solid #f5c6cb;
       font-size: 0.9rem;
     }
-    
+
     .success-details {
       background: #d4edda;
       color: #155724;
@@ -160,7 +160,7 @@
       border: 1px solid #c3e6cb;
       font-size: 0.9rem;
     }
-    
+
     .transaction-id {
       font-family: 'Courier New', monospace;
       background: #e9ecef;
@@ -174,11 +174,11 @@
         padding: 2rem 1.5rem;
         margin: 10px;
       }
-      
+
       .icon {
         font-size: 4rem;
       }
-      
+
       .card h2 {
         font-size: 1.5rem;
       }
@@ -193,19 +193,19 @@
     {% if "✅" in mensaje or response.status == "AUTHORIZED" %}
       <div class="icon success">✅</div>
       <h2>¡Pago Exitoso!</h2>
-      
+
       <div class="success-details">
         <strong>Tu pago ha sido procesado correctamente</strong><br>
         Recibirás un email de confirmación en breve.
       </div>
-      
+
       <div class="info-section">
         <div class="info-item">
-          <strong>ID de Venta:</strong> 
+          <strong>ID de Venta:</strong>
           <span class="transaction-id">#{{ venta.id }}</span>
         </div>
         <div class="info-item">
-          <strong>Total Pagado:</strong> 
+          <strong>Total Pagado:</strong>
           <span style="color: #28a745; font-weight: bold;">${{ venta.total_venta|floatformat:0 }}</span>
         </div>
         <div class="info-item">
@@ -223,7 +223,7 @@
         {% endif %}
         {% if venta.tipo_entrega %}
         <div class="info-item">
-          <strong>Tipo de Entrega:</strong> 
+          <strong>Tipo de Entrega:</strong>
           {% if venta.tipo_entrega == 'retiro' %}
             🏪 Retiro en tienda
           {% else %}
@@ -237,7 +237,7 @@
         </div>
         {% endif %}
       </div>
-      
+
       <div class="mt-4">
         <a href="/boleta/{{ venta.id }}/" class="btn btn-ferremas btn-lg">
           📄 Ver Boleta
@@ -251,7 +251,7 @@
     {% else %}
       <div class="icon fail">❌</div>
       <h2>Pago Rechazado</h2>
-      
+
       <div class="error-details">
         <strong>{{ mensaje|default:"Tu pago no pudo ser procesado" }}</strong><br>
         {% if response.status %}
@@ -260,20 +260,20 @@
           Por favor, verifica los datos de tu tarjeta e intenta nuevamente.
         {% endif %}
       </div>
-      
+
       <div class="info-section">
         {% if venta.id %}
         <div class="info-item">
-          <strong>Referencia:</strong> 
+          <strong>Referencia:</strong>
           <span class="transaction-id">#{{ venta.id }}</span>
         </div>
         {% endif %}
         <div class="info-item">
-          <strong>Monto:</strong> 
+          <strong>Monto:</strong>
           <span style="color: #dc3545; font-weight: bold;">${{ venta.total_venta|floatformat:0 }}</span>
         </div>
         <div class="info-item">
-          <strong>Fecha del intento:</strong> 
+          <strong>Fecha del intento:</strong>
           {% if venta.fecha_compra %}
             {{ venta.fecha_compra|date:"d/m/Y H:i" }}
           {% else %}
@@ -286,7 +286,7 @@
         </div>
         {% endif %}
       </div>
-      
+
       <div class="mt-4">
         <a href="/carrito/" class="btn btn-ferremas btn-lg">
           🛒 Volver al Carrito
@@ -295,7 +295,7 @@
           🏠 Ir al Inicio
         </a>
       </div>
-      
+
       <!-- Información adicional para casos de rechazo -->
       <div class="mt-3">
         <small class="text-muted">
