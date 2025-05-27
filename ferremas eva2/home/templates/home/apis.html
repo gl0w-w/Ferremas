@@ -2,27 +2,44 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+
   <meta charset="UTF-8">
   <title>Rutas API | FERREMAS</title>
+  <link rel="icon" href="{% static 'img/icon.png' %}" type="image/x-icon">
+
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; }
-    h1 { margin-bottom: 20px; }
+    body {
+    background: url('https://i.postimg.cc/Nf1VnWJz/grunge-metal-background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    font-family: Arial,
+    sans-serif; padding: 20px;
+    }
+    h1 {
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    justify-content: center;
+    }
     .button-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
     }
     .api-button {
-      padding: 10px 20px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      text-decoration: none;
-      cursor: pointer;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
     }
     .api-button:hover {
-      background-color: #0056b3;
+    background-color: #0056b3;
     }
   </style>
 </head>

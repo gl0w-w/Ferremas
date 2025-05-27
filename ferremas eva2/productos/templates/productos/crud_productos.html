@@ -17,7 +17,7 @@
     }
 
     .fondo {
-      background: url('https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yle55W6QKWSoQbE4/herramientas-manuales-basicas-02-2022-07-AE0vvPgGKDiqlZEX.jpg') no-repeat center center fixed;
+      background: url('https://i.postimg.cc/Nf1VnWJz/grunge-metal-background.jpg') no-repeat center center fixed;
       background-size: cover;
       min-height: 100vh;
       padding: 30px 15px;
@@ -179,7 +179,7 @@ const categoriasDisponibles = [
 const isLocal = window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost";
 const apiUrl = isLocal
   ? "http://127.0.0.1:8000/productos/api/admin/"
-  : "https://prueba-propia-ferremas-production.up.railway.app/productos/api/admin/";
+  : "http://127.0.0.1:8000/productos/api/admin/";
 
 document.addEventListener("DOMContentLoaded", () => {
   const filtro = document.getElementById("filtro-categoria");
@@ -260,7 +260,7 @@ function toggleActivoProducto(id) {
 
   const toggleUrl = isLocal
     ? `http://127.0.0.1:8000/productos/api/toggle-activo/${id}/`
-    : `https://prueba-propia-ferremas-production.up.railway.app/productos/api/toggle-activo/${id}/`;
+    : `http://127.0.0.1:8000/productos/api/toggle-activo/${id}/`;
 
   fetch(toggleUrl, {
     method: "PATCH",
