@@ -7,7 +7,9 @@ class Producto(models.Model):
     imagen = models.URLField(max_length=500, blank=True)
     stock = models.PositiveIntegerField(default=0)
     categoria = models.CharField(max_length=100, default="General")
-    activo = models.BooleanField(default=True)  # 🔹 nuevo campo
+    activo = models.BooleanField(default=True)  
+    fecha = models.DateTimeField(auto_now_add=True)
+
 
     def __str__(self):
         return self.nombre
