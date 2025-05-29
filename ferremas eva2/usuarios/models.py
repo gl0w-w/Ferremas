@@ -3,9 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 
 class Usuario(AbstractUser):
-    # Heredamos de AbstractUser que ya tiene campos como username, first_name, last_name, email, password, etc.
     
-    # Añadimos campos adicionales
     rut = models.CharField(
         max_length=12,
         unique=True,

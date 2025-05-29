@@ -26,7 +26,6 @@ class UsuarioSerializer(serializers.ModelSerializer):
         }
 
     def validate(self, data):
-        # Validar solo si están presentes
         if 'password' in data and 'password2' in data:
             if data['password'] != data['password2']:
                 raise serializers.ValidationError({"password": "Las contraseñas no coinciden."})

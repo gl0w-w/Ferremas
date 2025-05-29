@@ -60,7 +60,6 @@ def vista_carrito(request):
                 'productos_eliminados': productos_eliminados
             })
         else:
-            # 👇 Mostrar vista sin productos, sin mensaje personalizado
             return render(request, 'carro_compras/carrito.html', {
                 'entorno': settings.ENTORNO,
                 'detalles': [],
@@ -75,7 +74,6 @@ def vista_carrito(request):
 
 
 
-# Vista para gestionar el carrito (ver y crear)
 @swagger_auto_schema(
     method='get',
     operation_description="Obtener el carrito activo del usuario",

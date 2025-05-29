@@ -128,7 +128,6 @@ def api_lista_usuarios(request):
 def vista_lista_usuarios(request):
     return render(request, 'usuarios/lista_usuarios.html')
 
-################################################################
 @user_passes_test(lambda u: u.is_staff, login_url='/usuarios/iniciosesion/')
 def vista_agregar_usuario(request):
     return render(request, 'usuarios/agregar_usuario.html')
@@ -183,7 +182,6 @@ def api_agregar_usuario(request):
 def api_toggle_activo_usuario(request, id):
     usuario = get_object_or_404(Usuario, id=id)
 
-    # Evitar que un administrador se auto-banee
     if usuario == request.user:
         return Response(
             {"error": "No puedes suspender tu propia cuenta."},
