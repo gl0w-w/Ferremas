@@ -2,6 +2,13 @@
 
 ---
 
+> \[!IMPORTANT]
+> Estas son las credenciales para poder hacer el testeo de una compra con WebPay:
+> 
+> `N° 4051 8856 0044 6623 | Fecha: 11/11 | CVC: 123`
+>
+> `11.111.111-1 | 123`
+
 ## 📦 INSTALACIÓN
 
 > \[!IMPORTANT]
