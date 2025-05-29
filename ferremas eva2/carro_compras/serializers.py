@@ -7,6 +7,8 @@ class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuario
         fields = ['id', 'username', 'first_name', 'last_name', 'rut']
+        ref_name = 'CarroUsuario'
+
 
 class DetalleSerializer(serializers.ModelSerializer):
     class Meta:

@@ -10,6 +10,7 @@ urlpatterns = [
     path('marcar-leido/<int:mensaje_id>/', views.marcar_leido, name='marcar_leido'),  # Para toggle leído/no leído
     path('api/', views.api_home, name='api'),
 
+
     
     
 ]

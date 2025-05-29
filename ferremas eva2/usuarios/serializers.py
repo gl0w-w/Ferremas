@@ -9,6 +9,9 @@ class UsuarioSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=False, style={'input_type': 'password'})
     password2 = serializers.CharField(write_only=True, required=False, style={'input_type': 'password'})
     is_staff = serializers.BooleanField(required=False)
+    ref_name = 'UsuarioCompleto'
+
+    
 
     class Meta:
         model = Usuario

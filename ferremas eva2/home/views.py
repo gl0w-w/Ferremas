@@ -121,6 +121,9 @@ def contacto(request):
 def custom_404(request, exception):
     return render(request, '404.html', status=404)
 
-
 def api_home(request):
-    return render(request, 'home/apis.html')  # Este es el nombre correcto del archivo
+    return render(request, 'home/apis.html')  
+
+def swagger_docs(request):
+    """Vista para mostrar la documentación de Swagger"""
+    return render(request, 'home/swagger.html')

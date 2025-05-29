@@ -11,7 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-60gx)fedy5u0f!3tc7a*4y$xjmv+$4p2@!o)&r)82*3da!7(yl'
 
 # Importante: pon DEBUG en False para producción.
-DEBUG = False # Se pone True en desarrollo, y antes de subirlo SI O SI EN FALSE (producción)
+DEBUG = True # Se pone True en desarrollo, y antes de subirlo SI O SI EN FALSE (producción)
 #True deja ver los errores claramente / False cifra todo si es que algo falla
 
 # Define los dominios permitidos para producción (en este caso, el dominio de Railway)
@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',  # Para manejar sesiones de usuario
     'django.contrib.messages',  # Para manejar mensajes de usuario
     'django.contrib.staticfiles',  # Archivos estáticos (CSS, JS, imágenes)
+    'drf_yasg',
     'home',  # Tu aplicación de inicio
     'rest_framework',  # Framework para APIs
     'rest_framework.authtoken',
@@ -41,6 +42,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',  # Middleware de seguridad
     'django.contrib.sessions.middleware.SessionMiddleware',  # Middleware de sesiones
     'django.middleware.common.CommonMiddleware',  # Middleware de funcionalidades comunes
+    'ferremas.middleware.CSRFExemptMiddleware',  # Middleware personalizado para eximir CSRF en APIs
     'django.middleware.csrf.CsrfViewMiddleware',  # Middleware de protección CSRF
     'django.contrib.auth.middleware.AuthenticationMiddleware',  # Middleware de autenticación
     'django.contrib.messages.middleware.MessageMiddleware',  # Middleware de mensajes
@@ -50,6 +52,19 @@ MIDDLEWARE = [
 # Configuración CORS (permite solicitudes desde otros dominios)
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:8000",  # Para desarrollo local
+]
+
+# Configuración adicional para CORS - permite headers personalizados incluido X-CSRFToken
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
 ]
 
 # Archivo de configuración para las URLs del proyecto.
@@ -153,7 +168,10 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny'  # Cambia a IsAuthenticated si quieres proteger todo por defecto
-    ]
+    ],
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ],
 }
 
 TRANSBANK = {
@@ -183,3 +201,9 @@ DEFAULT_FROM_EMAIL = f"FERREMAS <{EMAIL_HOST_USER}>"
 
 
 PASSWORD_RESET_TIMEOUT = 7200
+
+# URLs que no requieren validación CSRF (especialmente para APIs)
+CSRF_EXEMPT_URLS = [
+    r'^/api/',  # Todas las URLs que empiecen con /api/
+    r'.*/api/',  # Todas las URLs que contengan /api/
+]

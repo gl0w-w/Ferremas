@@ -16,6 +16,10 @@ from django.http import HttpResponse
 from carro_compras import views
 from carro_compras.models import Venta, Detalle  # Asegúrate de importar esto arriba
 
+# Importaciones para Swagger
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
+
 
 #--------------------GET-----------------------
 
@@ -30,6 +34,16 @@ def lista_productos(request):
     })
 
 # Vista API (muestra los productos en formato JSON)
+@swagger_auto_schema(
+    method='get',
+    operation_description="Obtiene la lista de productos activos",
+    operation_summary="Listar productos activos",
+    tags=['Productos'],
+    responses={
+        200: openapi.Response('Lista de productos activos', ProductoSerializer(many=True)),
+        500: 'Error interno del servidor'
+    }
+)
 @api_view(['GET'])
 def api_lista_productos(request):
     productos = Producto.objects.filter(activo=True)  # Solo los activos
@@ -48,6 +62,18 @@ def es_admin(user):
 def formulario_producto(request):
     return render(request, 'productos/formulario_producto.html')
 
+@swagger_auto_schema(
+    method='post',
+    operation_description="Agrega uno o múltiples productos nuevos (solo administradores)",
+    operation_summary="Crear productos",
+    tags=['Productos - Admin'],
+    request_body=ProductoSerializer(many=True),
+    responses={
+        201: openapi.Response('Productos creados exitosamente', ProductoSerializer(many=True)),
+        400: 'Datos inválidos o error de validación',
+        403: 'No autorizado - Solo administradores'
+    }
+)
 @api_view(['POST'])
 @permission_classes([EsAdmin])
 def api_agregar_producto(request):
@@ -103,6 +129,22 @@ def lista_productos_crud(request):
         'entorno': settings.ENTORNO
     })
 
+@swagger_auto_schema(
+    method='put',
+    operation_description="Edita un producto existente y registra cambios de precio en el historial (solo administradores)",
+    operation_summary="Editar producto",
+    tags=['Productos - Admin'],
+    manual_parameters=[
+        openapi.Parameter('id', openapi.IN_PATH, description="ID del producto a editar", type=openapi.TYPE_INTEGER, required=True)
+    ],
+    request_body=ProductoSerializer,
+    responses={
+        200: openapi.Response('Producto actualizado exitosamente', ProductoSerializer),
+        400: 'Datos inválidos o error de validación',
+        403: 'No autorizado - Solo administradores',
+        404: 'Producto no encontrado'
+    }
+)
 @api_view(['PUT'])
 @permission_classes([EsAdmin])
 def api_editar_producto(request, id):
@@ -137,6 +179,33 @@ def editar_producto(request, id):
 def prueba_permisos(request):
     return HttpResponse(f"Usuario: {request.user.username} | Staff: {request.user.is_staff}")
 
+@swagger_auto_schema(
+    method='get',
+    operation_description="Obtiene la lista de productos que tienen ofertas/descuentos basados en el historial de precios",
+    operation_summary="Listar productos en oferta",
+    tags=['Productos'],
+    responses={
+        200: openapi.Response(
+            'Lista de productos en oferta',
+            openapi.Schema(
+                type=openapi.TYPE_ARRAY,
+                items=openapi.Schema(
+                    type=openapi.TYPE_OBJECT,
+                    properties={
+                        'id': openapi.Schema(type=openapi.TYPE_INTEGER, description='ID del producto'),
+                        'nombre': openapi.Schema(type=openapi.TYPE_STRING, description='Nombre del producto'),
+                        'descripcion': openapi.Schema(type=openapi.TYPE_STRING, description='Descripción del producto'),
+                        'precio': openapi.Schema(type=openapi.TYPE_INTEGER, description='Precio actual'),
+                        'imagen': openapi.Schema(type=openapi.TYPE_STRING, description='URL de la imagen'),
+                        'precio_anterior': openapi.Schema(type=openapi.TYPE_INTEGER, description='Precio anterior (antes del descuento)'),
+                        'stock': openapi.Schema(type=openapi.TYPE_INTEGER, description='Stock disponible')
+                    }
+                )
+            )
+        ),
+        500: 'Error interno del servidor'
+    }
+)
 @api_view(['GET'])
 def api_ofertas(request):
     from django.db.models import OuterRef, Subquery, F
@@ -165,6 +234,17 @@ def api_ofertas(request):
 
     return Response(resultado)
 
+@swagger_auto_schema(
+    method='get',
+    operation_description="Obtiene la lista completa de productos incluyendo los inactivos (solo administradores)",
+    operation_summary="Listar todos los productos (admin)",
+    tags=['Productos - Admin'],
+    responses={
+        200: openapi.Response('Lista completa de productos', ProductoSerializer(many=True)),
+        403: 'No autorizado - Solo administradores',
+        500: 'Error interno del servidor'
+    }
+)
 @api_view(['GET'])
 @permission_classes([EsAdmin])
 def api_lista_productos_admin(request):
@@ -172,6 +252,20 @@ def api_lista_productos_admin(request):
     serializer = ProductoSerializer(productos, many=True)
     return Response(serializer.data)
 
+@swagger_auto_schema(
+    method='delete',
+    operation_description="Elimina permanentemente un producto (solo administradores)",
+    operation_summary="Eliminar producto",
+    tags=['Productos - Admin'],
+    manual_parameters=[
+        openapi.Parameter('id', openapi.IN_PATH, description="ID del producto a eliminar", type=openapi.TYPE_INTEGER, required=True)
+    ],
+    responses={
+        204: 'Producto eliminado correctamente',
+        403: 'No autorizado - Solo administradores',
+        404: 'Producto no encontrado'
+    }
+)
 @api_view(['DELETE'])
 @permission_classes([EsAdmin])
 def api_eliminar_producto(request, id):
@@ -184,6 +278,34 @@ def api_eliminar_producto(request, id):
 
 
 
+@swagger_auto_schema(
+    method='get',
+    operation_description="Obtiene el detalle completo de un producto específico por su ID",
+    operation_summary="Obtener detalle de producto",
+    tags=['Productos'],
+    manual_parameters=[
+        openapi.Parameter('id', openapi.IN_PATH, description="ID del producto", type=openapi.TYPE_INTEGER, required=True)
+    ],
+    responses={
+        200: openapi.Response(
+            'Detalle del producto',
+            openapi.Schema(
+                type=openapi.TYPE_OBJECT,
+                properties={
+                    'id': openapi.Schema(type=openapi.TYPE_INTEGER, description='ID del producto'),
+                    'nombre': openapi.Schema(type=openapi.TYPE_STRING, description='Nombre del producto'),
+                    'descripcion': openapi.Schema(type=openapi.TYPE_STRING, description='Descripción del producto'),
+                    'precio': openapi.Schema(type=openapi.TYPE_INTEGER, description='Precio del producto'),
+                    'imagen': openapi.Schema(type=openapi.TYPE_STRING, description='URL de la imagen del producto'),
+                    'stock': openapi.Schema(type=openapi.TYPE_INTEGER, description='Stock disponible'),
+                    'categoria': openapi.Schema(type=openapi.TYPE_STRING, description='Nombre de la categoría'),
+                    'activo': openapi.Schema(type=openapi.TYPE_BOOLEAN, description='Estado activo del producto')
+                }
+            )
+        ),
+        404: 'Producto no encontrado'
+    }
+)
 @api_view(['GET'])
 def api_detalle_producto(request, id):
     try:
@@ -203,8 +325,3 @@ def api_detalle_producto(request, id):
     }
 
     return Response(data)
-
-
-
-
-
