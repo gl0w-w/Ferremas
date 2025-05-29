@@ -95,7 +95,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'ferremas',
         'USER': 'root',
-        'PASSWORD': 'Benja1142005',
+        'PASSWORD': 'ivanbknxd09',
         'HOST': 'localhost',
         'PORT': '3306',
     }
@@ -132,7 +132,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Directorios donde se encuentran los archivos estáticos
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),  
+    os.path.join(BASE_DIR, 'static'),
 ]
 
 # Para la carga de archivos estáticos en producción (cuando usas el servidor WhiteNoise)
