@@ -44,24 +44,51 @@ Una vez lo hayamos instalado, tendremos que configurar algunas cosas, primero no
 
 ![](https://i.ibb.co/QF5TVBMR/bd.png) 
 
----------------------------------------
+------------------------------
+
+>[!IMPORTANT] 
+Si no sabes como crear una te dejare una imagen de como se hace:
+>
+![](https://translate.google.com/website?sl=en&tl=es&hl=es&client=srp&u=https://itknowledgeexchange.techtarget.com/coffee-talk/files/2020/06/create-mysql-schema.png)
+
+------------------------------
 
 >[!NOTE]
->Recomendamos dejar los campos talcual se muestran, solo cambiar la contraseña a la que usted tiene en su MySQL.
+>Recomendamos dejar los campos tal cual se muestran, solo cambiar la contraseña a la que usted tiene en su MySQL.
 
 ---------------------------------------
 
 **Ahora que tenemos conectada nuestra base de datos, tenemos que migrar para que se muestren las tablas en nuestra bd dentro de MySQL.**
-- Si no sabes como crear una te dejare una imagen de como se hace:
-
-
-![](https://translate.google.com/website?sl=en&tl=es&hl=es&client=srp&u=https://itknowledgeexchange.techtarget.com/coffee-talk/files/2020/06/create-mysql-schema.png)
-
------------------------------------
-
-
 
 <pre><code>python.exe manage.py migrate</code></pre>
+
+Una vez que hayamos migrado dentro de nuestra bd creada mostrar las siguiente tablas:
+
+![image](https://github.com/user-attachments/assets/a9c2cf92-9cb6-49a9-bb9c-03924e9d0cf6)
+
+---------------------------------------
+
+Ahora tenemos que nuestra base de datos lista, podemos iniciar nuestro proyecto!. Empecemos con el siguiente comando:
+<pre><code>python.exe manage.py runserver</code></pre>
+
+---------------------
+>[!CAUTION]
+En caso de que al intentar iniciar el proyecto te de un error, probablemente sea por que fallo la instalación de Django a la hora de instalar el archivo \requirements.txt.
+>
+Ingresa este codigo para instalarlo:
+<pre><code>py -m pip install django==5.2.1</code></pre>
+----------------------
+
+# ¿Cómo saber si esta funcionando?
+Veremos en la consola que ya no tenemos ningun erro y también algo así:
+>
+![asdasd](https://github.com/user-attachments/assets/7a073bb6-d12b-4c55-a6ce-134d26b0160a)
+>
+Con tan solo pulsar ctrl + click en lo que esta marcado o copiar y pegar en nuestro navegador de confianza se nos abrira la consola.
+
+# Disfruta!
+Perfecto! ahora que tenemos el proyecto funcionando podemos ver como funciona la página! disfruta e interactua con la página.
+
 
 
 
