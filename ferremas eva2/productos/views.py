@@ -61,15 +61,34 @@ def es_admin(user):
 @user_passes_test(es_admin)
 def formulario_producto(request):
     return render(request, 'productos/formulario_producto.html')
-
 @swagger_auto_schema(
     method='post',
-    operation_description="Agrega uno o múltiples productos nuevos (solo administradores)",
-    operation_summary="Crear productos",
+    operation_description="Agrega uno o múltiples productos nuevos (solo administradores). Acepta tanto un objeto único como un array de objetos.",
+    operation_summary="Crear productos (flexible)",
     tags=['Productos - Admin'],
-    request_body=ProductoSerializer(many=True),
+    request_body=openapi.Schema(
+        type=openapi.TYPE_OBJECT,
+        description="Formato de producto para crear uno o múltiples productos",
+        properties={
+            'nombre': openapi.Schema(type=openapi.TYPE_STRING, description='Nombre del producto'),
+            'descripcion': openapi.Schema(type=openapi.TYPE_STRING, description='Descripción del producto'),
+            'precio': openapi.Schema(type=openapi.TYPE_INTEGER, description='Precio del producto'),
+            'imagen': openapi.Schema(type=openapi.TYPE_STRING, description='URL de la imagen'),
+            'stock': openapi.Schema(type=openapi.TYPE_INTEGER, description='Stock disponible'),
+            'categoria': openapi.Schema(type=openapi.TYPE_STRING, description='Categoría del producto'),
+        },
+        required=['nombre', 'descripcion', 'precio', 'stock'],
+        example={
+            "nombre": "Martillo",
+            "descripcion": "Martillo de acero inoxidable",
+            "precio": 15000,
+            "imagen": "https://ejemplo.com/martillo.jpg",
+            "stock": 50,
+            "categoria": "Herramientas"
+        }
+    ),
     responses={
-        201: openapi.Response('Productos creados exitosamente', ProductoSerializer(many=True)),
+        201: openapi.Response('Productos creados exitosamente'),
         400: 'Datos inválidos o error de validación',
         403: 'No autorizado - Solo administradores'
     }
@@ -77,13 +96,34 @@ def formulario_producto(request):
 @api_view(['POST'])
 @permission_classes([EsAdmin])
 def api_agregar_producto(request):
-    serializer = ProductoSerializer(data=request.data, many=True)
+    # Detectar si es un array o un objeto único
+    data = request.data
+    is_array = isinstance(data, list)
+    
+    # Si es un objeto único, convertirlo a array para procesarlo
+    if not is_array:
+        data = [data]
+    
+    # Procesar como array
+    serializer = ProductoSerializer(data=data, many=True)
+    
     if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
+        productos_creados = serializer.save()
+        
+        # Si originalmente era un objeto único, devolver solo ese objeto
+        if not is_array:
+            return Response(serializer.data[0], status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+    # Manejar errores
+    if not is_array:
+        # Si era un objeto único, devolver solo el primer error para mayor claridad
+        first_error = serializer.errors[0] if serializer.errors else {}
+        return Response(first_error, status=status.HTTP_400_BAD_REQUEST)
+    else:
+        # Si era un array, devolver todos los errores
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @login_required
 def detalle_producto(request, id):
@@ -229,7 +269,7 @@ def api_ofertas(request):
             'precio': p.precio,
             'imagen': p.imagen,
             'precio_anterior': getattr(p, 'precio_anterior', None),
-            'stock': p.stock  # ✅ se agrega aquí
+            'stock': p.stock  
         })
 
     return Response(resultado)

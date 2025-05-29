@@ -5,6 +5,7 @@ class ProductoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Producto
         fields = '__all__'
+        
 
 class HistorialPrecioSerializer(serializers.ModelSerializer):
     class Meta:

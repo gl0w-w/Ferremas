@@ -1,12 +1,48 @@
 {
 	"info": {
-		"_postman_id": "8feba02f-21ad-4008-84a2-626e8e37a420",
+		"_postman_id": "02c3a1fe-d631-4826-9cfb-9d558bf1fbe1",
 		"name": "ferremas ev2",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "44725404",
-		"_collection_link": "https://basc-2620014.postman.co/workspace/B-Asc's-Workspace~b7a4604a-d1d0-4c28-8805-2eae23942aba/collection/44725404-8feba02f-21ad-4008-84a2-626e8e37a420?action=share&source=collection_link&creator=44725404"
+		"_collection_link": "https://basc-2620014.postman.co/workspace/B-Asc's-Workspace~b7a4604a-d1d0-4c28-8805-2eae23942aba/collection/44725404-02c3a1fe-d631-4826-9cfb-9d558bf1fbe1?action=share&source=collection_link&creator=44725404"
 	},
 	"item": [
+		{
+			"name": "agregar usuario",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "token fe8707bd87491bd97a86c97cf56031e1a96a432b",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/usuarios/agregar/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"usuarios",
+						"agregar",
+						""
+					]
+				}
+			},
+			"response": []
+		},
 		{
 			"name": "obtener usuarios",
 			"request": {
@@ -49,7 +85,19 @@
 			"name": "agregar porductos",
 			"request": {
 				"auth": {
-					"type": "noauth"
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "",
+							"type": "string"
+						}
+					]
 				},
 				"method": "POST",
 				"header": [
@@ -60,13 +108,13 @@
 					},
 					{
 						"key": "Authorization",
-						"value": "Token de2ede0e2f733fc80ea704ba16e6af34f65cd79c",
+						"value": "token da4b9e2f0304a8a564303f10788b2c4e1810ea9b",
 						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "[\r\n  {\"nombre\": \"Martillo de carpintero\", \"descripcion\": \"Martillo de acero con mango antideslizante\", \"precio\": 8500, \"stock\": 50, \"activo\": true},\r\n  {\"nombre\": \"Destornillador plano\", \"descripcion\": \"Destornillador con punta plana y mango ergonómico\", \"precio\": 3500, \"stock\": 70, \"activo\": true},\r\n  {\"nombre\": \"Llave inglesa\", \"descripcion\": \"Llave ajustable de 10 pulgadas\", \"precio\": 12000, \"stock\": 40, \"activo\": true},\r\n  {\"nombre\": \"Cinta métrica\", \"descripcion\": \"Cinta métrica de 5 metros\", \"precio\": 7000, \"stock\": 100, \"activo\": true},\r\n  {\"nombre\": \"Nivel de burbuja\", \"descripcion\": \"Nivel de burbuja de aluminio\", \"precio\": 9000, \"stock\": 35, \"activo\": true},\r\n  {\"nombre\": \"Sierra eléctrica\", \"descripcion\": \"Sierra eléctrica con hoja de 7 pulgadas\", \"precio\": 85000, \"stock\": 12, \"activo\": true},\r\n  {\"nombre\": \"Alicate universal\", \"descripcion\": \"Alicate para múltiples usos\", \"precio\": 8000, \"stock\": 60, \"activo\": true},\r\n  {\"nombre\": \"Cúter profesional\", \"descripcion\": \"Cúter con hoja retráctil y empuñadura segura\", \"precio\": 4500, \"stock\": 85, \"activo\": true},\r\n  {\"nombre\": \"Taladro inalámbrico\", \"descripcion\": \"Taladro sin cable con batería de larga duración\", \"precio\": 75000, \"stock\": 18, \"activo\": true},\r\n  {\"nombre\": \"Lijadora orbital\", \"descripcion\": \"Lijadora eléctrica para acabados finos\", \"precio\": 60000, \"stock\": 20, \"activo\": true},\r\n  {\"nombre\": \"Cepillo de carpintero\", \"descripcion\": \"Cepillo manual para madera\", \"precio\": 9500, \"stock\": 40, \"activo\": true},\r\n  {\"nombre\": \"Brocha para pintura\", \"descripcion\": \"Brocha de 3 pulgadas para pintura\", \"precio\": 2500, \"stock\": 150, \"activo\": true},\r\n  {\"nombre\": \"Esmeril angular\", \"descripcion\": \"Herramienta para corte y pulido\", \"precio\": 65000, \"stock\": 15, \"activo\": true},\r\n  {\"nombre\": \"Guantes de trabajo\", \"descripcion\": \"Guantes resistentes para construcción\", \"precio\": 7000, \"stock\": 100, \"activo\": true},\r\n  {\"nombre\": \"Linterna LED\", \"descripcion\": \"Linterna portátil con luz potente\", \"precio\": 15000, \"stock\": 45, \"activo\": true},\r\n  {\"nombre\": \"Cinta aislante\", \"descripcion\": \"Cinta para aislamiento eléctrico\", \"precio\": 2000, \"stock\": 200, \"activo\": true},\r\n  {\"nombre\": \"Regla metálica\", \"descripcion\": \"Regla de acero inoxidable de 30 cm\", \"precio\": 3000, \"stock\": 80, \"activo\": true},\r\n  {\"nombre\": \"Pistola de silicona\", \"descripcion\": \"Pistola para aplicar silicona con precisión\", \"precio\": 18000, \"stock\": 30, \"activo\": true},\r\n  {\"nombre\": \"Tijeras para metal\", \"descripcion\": \"Tijeras robustas para cortar metal fino\", \"precio\": 12000, \"stock\": 25, \"activo\": true},\r\n  {\"nombre\": \"Mascarilla de protección\", \"descripcion\": \"Mascarilla reutilizable para polvo y partículas\", \"precio\": 5000, \"stock\": 90, \"activo\": true}\r\n]\r\n\r\n",
+					"raw": "    {\r\n        \"nombre\": \"pistola de clavos\",\r\n        \"descripcion\": \"pistola de calvos de alta calidad\",\r\n        \"precio\": 1000,\r\n        \"imagen\": \"https://media.falabella.com/sodimacCL/7613164_01/w=800,h=800,fit=pad\",\r\n        \"stock\": 0,\r\n        \"categoria\": \"Herramientas\",\r\n        \"activo\": true,\r\n    },\r\n    {\r\n        \"nombre\": \"Clavos oxidados\",\r\n        \"descripcion\": \"clavos con oxido\",\r\n        \"precio\": 10,\r\n        \"imagen\": \"https://static4.depositphotos.com/1000133/389/i/450/depositphotos_3899458-stock-photo-rusty-nails.jpg\",\r\n        \"stock\": 1000,\r\n        \"categoria\": \"Construcción\",\r\n        \"activo\": true,\r\n    },\r\n    {\r\n        \"nombre\": \"Destornillador Estrella\",\r\n        \"descripcion\": \"Destornillador de estrella con mango ergonómico.\",\r\n        \"precio\": 2500,\r\n        \"imagen\": \"https://casamusacl.vtexassets.com/arquivos/ids/161004/395023.jpg?v=638058410350770000\",\r\n        \"stock\": 15,\r\n        \"categoria\": \"Herramientas\",\r\n        \"activo\": true,\r\n    },\r\n    {\r\n        \"nombre\": \"Martillo de carpintero\",\r\n        \"descripcion\": \"Martillo de acero con mango antideslizante\",\r\n        \"precio\": 8500,\r\n        \"imagen\": \"https://rgm.vtexassets.com/arquivos/ids/156235-800-auto?v=638554617786370000&width=800&height=auto&aspect=true\",\r\n        \"stock\": 50,\r\n        \"categoria\": \"Herramientas\",\r\n        \"activo\": true,\r\n    },\r\n    {\r\n        \"nombre\": \"Destornillador plano\",\r\n        \"descripcion\": \"Destornillador con punta plana y mango ergonómico\",\r\n        \"precio\": 3500,\r\n        \"imagen\": \"https://socodima.cl/16863-large_default/destornillador-w-max-juego-plano-cruz-6-pzas.jpg\",\r\n        \"stock\": 70,\r\n        \"categoria\": \"Herramientas\",\r\n        \"activo\": true,\r\n    },\r\n    {\r\n        \"nombre\": \"Llave inglesa\",\r\n        \"descripcion\": \"Llave ajustable de 10 pulgadas\",\r\n        \"precio\": 12000,\r\n        \"imagen\": \"https://www.feram.cl/cdn/shop/files/f810ba31c4c175361ad9882121ec6ffe_b6a148e4-82e8-4ee8-b9cd-8d132a7f27f1.jpg?v=1747759872\",\r\n        \"stock\": 40,\r\n        \"categoria\": \"Herramientas\",\r\n        \"activo\": true,\r\n    },\r\n    {\r\n        \"nombre\": \"Cinta métrica\",\r\n        \"descripcion\": \"Cinta métrica de 5 metros\",\r\n        \"precio\": 7000,\r\n        \"imagen\": \"https://cdnx.jumpseller.com/my-toolbox-chile/image/42833863/d_nq_np_2x_820651-mlc40854154766_022020-f-8cff2697-107e-4579-baa7-b830d0424250.jpg?1732308296\",\r\n        \"stock\": 100,\r\n        \"categoria\": \"Herramientas\",\r\n        \"activo\": true,\r\n    },\r\n    {\r\n        \"nombre\": \"Nivel de burbuja\",\r\n        \"descripcion\": \"Nivel de burbuja de aluminio\",\r\n        \"precio\": 9000,\r\n        \"imagen\": \"https://cdnx.jumpseller.com/maqstore/image/34324616/resize/540/540?1682011094\",\r\n        \"stock\": 35,\r\n        \"categoria\": \"Herramientas\",\r\n        \"activo\": true,\r\n    },\r\n    {\r\n        \"nombre\": \"Sierra eléctrica\",\r\n        \"descripcion\": \"Sierra eléctrica con hoja de 7 pulgadas\",\r\n        \"precio\": 85000,\r\n        \"imagen\": \"https://comercialjeno.cl/cdn/shop/files/TS1161856SierraElectrica1600W....jpg?v=1715351323\",\r\n        \"stock\": 12,\r\n        \"categoria\": \"Herramientas\",\r\n        \"activo\": true,\r\n    },\r\n    {\r\n        \"nombre\": \"Alicate universal\",\r\n        \"descripcion\": \"Alicate para múltiples usos\",\r\n        \"precio\": 8000,\r\n        \"imagen\": \"https://mimbralb2c.vtexassets.com/arquivos/ids/188858-800-1067?v=638337633933570000&width=800&height=1067&aspect=true\",\r\n        \"stock\": 60,\r\n        \"categoria\": \"Herramientas\",\r\n        \"activo\": true,\r\n    },\r\n    {\r\n        \"nombre\": \"Cúter profesional\",\r\n        \"descripcion\": \"Cúter con hoja retráctil y empuñadura segura\",\r\n        \"precio\": 4500,\r\n        \"imagen\": \"https://www.dimarsa.cl/media/catalog/product/m/a/marcasecosa17-12-008-gris2jpeg_1.jpg\",\r\n        \"stock\": 85,\r\n        \"categoria\": \"Construcción\",\r\n        \"activo\": true,\r\n    },\r\n    {\r\n        \"nombre\": \"Taladro inalámbrico\",\r\n        \"descripcion\": \"Taladro sin cable con batería de larga duración\",\r\n        \"precio\": 75000,\r\n        \"imagen\": \"https://totalherramientas.cl/wp-content/uploads/2023/01/TDLI1211-1.jpg\",\r\n        \"stock\": 18,\r\n        \"categoria\": \"Herramientas\",\r\n        \"activo\": true,\r\n    },\r\n    {\r\n        \"nombre\": \"Lijadora orbital\",\r\n        \"descripcion\": \"Lijadora eléctrica para acabados finos\",\r\n        \"precio\": 60000,\r\n        \"imagen\": \"https://herramientastotal.cl/cdn/shop/products/total-tools-lijadoras-lijadora-roto-orbital-150mm-450w-total-32152429789354_700x700.jpg?v=1669394568\",\r\n        \"stock\": 20,\r\n        \"categoria\": \"Herramientas\",\r\n        \"activo\": true,\r\n    },\r\n    {\r\n        \"nombre\": \"Cepillo de carpintero\",\r\n        \"descripcion\": \"Cepillo manual para madera\",\r\n        \"precio\": 9500,\r\n        \"imagen\": \"https://cdnx.jumpseller.com/ferroelectronic/image/41031033/1697478672408-MKHWVQ7XZL-1-1.jpg?1697570985\",\r\n        \"stock\": 40,\r\n        \"categoria\": \"Construcción\",\r\n        \"activo\": true,\r\n    },\r\n    {\r\n        \"nombre\": \"Brocha para pintura\",\r\n        \"descripcion\": \"Brocha de 3 pulgadas para pintura\",\r\n        \"precio\": 2500,\r\n        \"imagen\": \"https://herramientastotal.cl/cdn/shop/files/THT8450801-TEXTO_700x700.jpg?v=1691078673\",\r\n        \"stock\": 150,\r\n        \"categoria\": \"Pinturas\",\r\n        \"activo\": true,\r\n    },\r\n    {\r\n        \"nombre\": \"Esmeril angular\",\r\n        \"descripcion\": \"Herramienta para corte y pulido\",\r\n        \"precio\": 65000,\r\n        \"imagen\": \"https://cdnx.jumpseller.com/maqstore/image/35575664/ga7082.png?1684860702\",\r\n        \"stock\": 15,\r\n        \"categoria\": \"Herramientas\",\r\n        \"activo\": true,\r\n    },\r\n    {\r\n        \"nombre\": \"Guantes de trabajo\",\r\n        \"descripcion\": \"Guantes resistentes para construcción\",\r\n        \"precio\": 7000,\r\n        \"imagen\": \"https://http2.mlstatic.com/D_NQ_NP_727610-MLC76203660578_052024-O-12-pares-guantes-trabajo-pigmentado-puntos-de-goma-seguridad.webp\",\r\n        \"stock\": 100,\r\n        \"categoria\": \"Seguridad\",\r\n        \"activo\": true,\r\n    },\r\n    {\r\n        \"nombre\": \"Linterna LED\",\r\n        \"descripcion\": \"Linterna portátil con luz potente\",\r\n        \"precio\": 15000,\r\n        \"imagen\": \"https://sogno.cl/cdn/shop/products/Linterna-led-recargable-19cm-sogno-chile7_11zon_600x600_crop_center.jpg?v=1659046237\",\r\n        \"stock\": 45,\r\n        \"categoria\": \"Iluminación\",\r\n        \"activo\": true,\r\n    },\r\n    {\r\n        \"nombre\": \"Cinta aislante\",\r\n        \"descripcion\": \"Cinta para aislamiento eléctrico\",\r\n        \"precio\": 2000,\r\n        \"imagen\": \"https://cdnx.jumpseller.com/ferreteria-sur/image/7819827/5-rollos-cinta-aislante-pvc-negro-25mx50mm.jpg?1616694599\",\r\n        \"stock\": 200,\r\n        \"categoria\": \"Adhesivos\",\r\n        \"activo\": true,\r\n    },\r\n    {\r\n        \"nombre\": \"Regla metálica\",\r\n        \"descripcion\": \"Regla de acero inoxidable de 30 cm\",\r\n        \"precio\": 3000,\r\n        \"imagen\": \"https://www.torre.cl/wp-content/uploads/2023/01/31640-2-1024x1024.jpg\",\r\n        \"stock\": 80,\r\n        \"categoria\": \"Herramientas\",\r\n        \"activo\": true,\r\n    },\r\n    {\r\n        \"nombre\": \"Pistola de silicona\",\r\n        \"descripcion\": \"Pistola para aplicar silicona con precisión\",\r\n        \"precio\": 18000,\r\n        \"imagen\": \"https://http2.mlstatic.com/D_NQ_NP_601517-MLU74074116244_012024-O.webp\",\r\n        \"stock\": 30,\r\n        \"categoria\": \"Adhesivos\",\r\n        \"activo\": true,\r\n    },\r\n    {\r\n        \"nombre\": \"Tijeras para metal\",\r\n        \"descripcion\": \"Tijeras robustas para cortar metal fino\",\r\n        \"precio\": 12000,\r\n        \"imagen\": \"https://dojiw2m9tvv09.cloudfront.net/61561/product/239-26431.png\",\r\n        \"stock\": 25,\r\n        \"categoria\": \"Herramientas\",\r\n        \"activo\": true,\r\n    },\r\n    {\r\n        \"nombre\": \"Mascarilla de protección\",\r\n        \"descripcion\": \"Mascarilla reutilizable para polvo y partículas\",\r\n        \"precio\": 5000,\r\n        \"imagen\": \"https://www.almacendelpintor.com/4595-thickbox_default/mascarilla-de-proteccion-respiratoria-elipse-integra-ov-p100-niosh-gvs.jpg\",\r\n        \"stock\": 90,\r\n        \"categoria\": \"Seguridad\",\r\n        \"activo\": true,\r\n    }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -88,6 +136,59 @@
 						"api",
 						"agregar",
 						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "editar producto",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "token fe8707bd87491bd97a86c97cf56031e1a96a432b",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nombre\": \"testpostman\",\r\n  \"descripcion\": \"testpostman\",\r\n  \"precio\": 2147483647,\r\n  \"imagen\": \"\",\r\n  \"stock\": 4294967295,\r\n  \"categoria\": \"otro\",\r\n  \"activo\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/productos/api/editar/40/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"productos",
+						"api",
+						"editar",
+						"40",
+						""
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
 					]
 				}
 			},
